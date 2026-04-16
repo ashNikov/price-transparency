@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from .database import engine
 from . import models
+from .routes import router
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -9,6 +10,8 @@ app = FastAPI(
     description="Community-powered price intelligence for Nigerian markets",
     version="0.1.0"
 )
+
+app.include_router(router, prefix="/api/v1")
 
 @app.get("/")
 def root():
